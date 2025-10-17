@@ -105,7 +105,7 @@ Run daily at 9 AM:
 ```bash
 crontab -e
 # Add this line:
-0 9 * * * cd ~/jobSearcher && ./run_all.sh >> ~/jobSearcher/cron.log 2>&1
+0 9 * * * cd ~/jobSearcher && ./run_all.sh >> ~/tech-internships-boston-area/cron.log 2>&1
 ```
 
 ---
