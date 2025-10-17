@@ -10,59 +10,11 @@ companies:
   - {name: Datadog,          provider: greenhouse, slug: datadog, include_keywords: [], exclude_keywords: []}
   - {name: HubSpot,          provider: greenhouse, slug: hubspot, include_keywords: [], exclude_keywords: []}
   - {name: Wayfair,          provider: greenhouse, slug: wayfair, include_keywords: [], exclude_keywords: []}
-  - {name: Rapid7,           provider: greenhouse, slug: rapid7, include_keywords: [], exclude_keywords: []}
-  - {name: Klaviyo,          provider: greenhouse, slug: klaviyo, include_keywords: [], exclude_keywords: []}
-  - {name: Toast,            provider: greenhouse, slug: toast, include_keywords: [], exclude_keywords: []}
-  - {name: DraftKings,       provider: greenhouse, slug: draftkings, include_keywords: [], exclude_keywords: []}
-  - {name: Snyk,             provider: greenhouse, slug: snyk, include_keywords: [], exclude_keywords: []}
-  - {name: Motional,         provider: greenhouse, slug: motional, include_keywords: [], exclude_keywords: []}
-  - {name: Ginkgo Bioworks,  provider: greenhouse, slug: ginkgobioworks, include_keywords: [], exclude_keywords: []}
-  - {name: Cloudflare,       provider: greenhouse, slug: cloudflare, include_keywords: [], exclude_keywords: []}
-  - {name: MongoDB,          provider: greenhouse, slug: mongodb, include_keywords: [], exclude_keywords: []}
-  - {name: DigitalOcean,     provider: greenhouse, slug: digitalocean, include_keywords: [], exclude_keywords: []}
-  - {name: Flywire,          provider: greenhouse, slug: flywire, include_keywords: [], exclude_keywords: []}
-  - {name: ezCater,          provider: greenhouse, slug: ezcater, include_keywords: [], exclude_keywords: []}
-  - {name: Salsify,          provider: greenhouse, slug: salsify, include_keywords: [], exclude_keywords: []}
-  - {name: Starburst,        provider: greenhouse, slug: starburstdata, include_keywords: [], exclude_keywords: []}
-  - {name: Jellyfish,        provider: greenhouse, slug: jellyfish, include_keywords: [], exclude_keywords: []}
-  - {name: Cybereason,       provider: greenhouse, slug: cybereason, include_keywords: [], exclude_keywords: []}
-  - {name: Reify Health,     provider: greenhouse, slug: reifyhealth, include_keywords: [], exclude_keywords: []}
-  - {name: WHOOP,            provider: greenhouse, slug: whoop, include_keywords: [], exclude_keywords: []}
-  - {name: Indigo Ag,        provider: greenhouse, slug: indigoag, include_keywords: [], exclude_keywords: []}
-  - {name: Kensho,           provider: greenhouse, slug: kensho, include_keywords: [], exclude_keywords: []}
-  - {name: Tamr,             provider: greenhouse, slug: tamr, include_keywords: [], exclude_keywords: []}
-  - {name: CarGurus,         provider: greenhouse, slug: cargurus, include_keywords: [], exclude_keywords: []}
-  - {name: Tripadvisor,      provider: greenhouse, slug: tripadvisor, include_keywords: [], exclude_keywords: []}
-  - {name: Formlabs,         provider: greenhouse, slug: formlabs, include_keywords: [], exclude_keywords: []}
-  - {name: CircleCI,         provider: greenhouse, slug: circleci, include_keywords: [], exclude_keywords: []}
-  - {name: Algorand,         provider: greenhouse, slug: algorand, include_keywords: [], exclude_keywords: []}
-  - {name: LogRocket,        provider: greenhouse, slug: logrocket, include_keywords: [], exclude_keywords: []}
-  - {name: Jobcase,          provider: greenhouse, slug: jobcase, include_keywords: [], exclude_keywords: []}
-  - {name: SmartBear,        provider: greenhouse, slug: smartbear, include_keywords: [], exclude_keywords: []}
-  - {name: Nasuni,           provider: greenhouse, slug: nasuni, include_keywords: [], exclude_keywords: []}
-  - {name: Recorded Future,  provider: greenhouse, slug: recordedfuture, include_keywords: [], exclude_keywords: []}
-  - {name: Starry,           provider: greenhouse, slug: starry, include_keywords: [], exclude_keywords: []}
-  - {name: Hopper,           provider: greenhouse, slug: hopper, include_keywords: [], exclude_keywords: []}
-  - {name: Tulip,            provider: greenhouse, slug: tulip, include_keywords: [], exclude_keywords: []}
-  - {name: CloudHealth,      provider: greenhouse, slug: cloudhealthtech, include_keywords: [], exclude_keywords: []}
-  - {name: InsightSquared,   provider: greenhouse, slug: insightsquared, include_keywords: [], exclude_keywords: []}
+  - {name: Robin Powered,      provider: greenhouse, slug: robinpowered, include_keywords: [], exclude_keywords: []}
+  - {name: Perceptive Automata, provider: greenhouse, slug: perceptiveautomata, include_keywords: [], exclude_keywords: []}
+  - {name: Tulip Interfaces,   provider: greenhouse, slug: tulipinterfaces, include_keywords: [], exclude_keywords: []}
 
   # --- Lever ---
-  - {name: Drift,            provider: lever, slug: drift, include_keywords: [], exclude_keywords: []}
-  - {name: Circle (USDC),    provider: lever, slug: circle, include_keywords: [], exclude_keywords: []}
-  - {name: Algolia,          provider: lever, slug: algolia, include_keywords: [], exclude_keywords: []}
-  - {name: Cockroach Labs,   provider: lever, slug: cockroachlabs, include_keywords: [], exclude_keywords: []}
-  - {name: Fivetran,         provider: lever, slug: fivetran, include_keywords: [], exclude_keywords: []}
-  - {name: Plaid,            provider: lever, slug: plaid, include_keywords: [], exclude_keywords: []}
-  - {name: Affirm,           provider: lever, slug: affirm, include_keywords: [], exclude_keywords: []}
-  - {name: Databricks,       provider: lever, slug: databricks, include_keywords: [], exclude_keywords: []}
-  - {name: Airtable,         provider: lever, slug: airtable, include_keywords: [], exclude_keywords: []}
-  - {name: Asana,            provider: lever, slug: asana, include_keywords: [], exclude_keywords: []}
-  - {name: Notion,           provider: lever, slug: notion, include_keywords: [], exclude_keywords: []}
-  - {name: Scale AI,         provider: lever, slug: scaleai, include_keywords: [], exclude_keywords: []}
-  - {name: Snowflake,        provider: lever, slug: snowflake, include_keywords: [], exclude_keywords: []}
-  - {name: Brex,             provider: lever, slug: brex, include_keywords: [], exclude_keywords: []}
-  - {name: HashiCorp,        provider: lever, slug: hashicorp, include_keywords: [], exclude_keywords: []}
 
 # Expand this list with other Boston/remote-friendly companies on Greenhouse/Lever:
 # Akamai (custom career site), MathWorks (Workday), Amazon Robotics (Workday), NVIDIA (Greenhouse: nvidia),

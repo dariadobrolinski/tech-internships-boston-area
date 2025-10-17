@@ -49,15 +49,12 @@ class Config:
 
 # ---------- Defaults ----------
 ROLE_KEYWORDS_DEFAULT = [
-    "intern", "internship",
-    "systems", "infrastructure", "backend", "core systems",
-    "reliability", "site reliability", "sre",
-    "compiler", "compilers",
-    "algorithm", "algorithms",
-    "quant", "quantitative",
-    "simulation", "modeling",
-    "data infrastructure", "data platform",
-    "ml systems", "machine learning systems", "ml infra", "ml platform",
+    "intern", "internship", "co-op", "coop", "student", "graduate", "new grad", "entry", "junior",
+    "systems", "infrastructure", "backend", "core systems", "frontend", "front end", "full stack", "web", "mobile",
+    "reliability", "site reliability", "sre", "devops", "cloud", "security", "qa", "quality assurance", "support", "IT",
+    "compiler", "compilers", "algorithm", "algorithms", "quant", "quantitative", "simulation", "modeling",
+    "data infrastructure", "data platform", "analytics", "data science", "ml systems", "machine learning systems", "ml infra", "ml platform",
+    "product", "UX", "UI", "design", "research", "campus", "university", "fall", "spring", "summer"
     "platform"
 ]
 
@@ -264,7 +261,10 @@ def main():
 
     # Sort newest first (by provider timestamp if present)
     def sort_key(it: Dict[str, Any]):
-        return (it.get("updated_at") or "", it.get("company") or "")
+        updated = it.get("updated_at")
+        if not isinstance(updated, str):
+            updated = str(updated) if updated is not None else ""
+        return (updated, it.get("company") or "")
 
     results_sorted = sorted(results, key=sort_key, reverse=True)
 

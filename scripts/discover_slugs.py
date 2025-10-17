@@ -204,7 +204,7 @@ def append_jobs_to_readme(jobs_to_add):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cities", default="Boston,Cambridge,Somerville,Quincy,Newton,Brookline,Waltham,Watertown,Burlington,Lexington,Needham")
-    ap.add_argument("--keywords", default="intern internship software engineer backend infrastructure systems reliability compiler quant data platform ml ai")
+    ap.add_argument("--keywords", default="intern internship co-op coop student graduate new grad entry junior software engineer backend infrastructure systems reliability compiler quant data platform analytics data science ml ai frontend front end full stack web mobile devops cloud security qa quality assurance support IT product UX UI design research campus university fall spring summer")
     ap.add_argument("--max", type=int, default=100)
     ap.add_argument("--config", default="config/companies.yml")
     args = ap.parse_args()

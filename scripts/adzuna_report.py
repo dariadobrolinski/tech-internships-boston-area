@@ -36,7 +36,7 @@ def fetch_adzuna(what: str, where: str = "Boston, MA", max_days_old: int = 7, re
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--what", default='intern systems OR infrastructure OR backend OR reliability OR compiler OR quant OR simulation OR modeling OR "data infrastructure" OR "ml systems"')
+    ap.add_argument("--what", default='intern OR internship OR co-op OR coop OR student OR graduate OR "new grad" OR entry OR junior OR systems OR infrastructure OR backend OR "core systems" OR frontend OR "front end" OR "full stack" OR web OR mobile OR reliability OR "site reliability" OR sre OR devops OR cloud OR security OR qa OR "quality assurance" OR support OR IT OR compiler OR compilers OR algorithm OR algorithms OR quant OR quantitative OR simulation OR modeling OR "data infrastructure" OR "data platform" OR analytics OR "data science" OR "ml systems" OR "machine learning systems" OR "ml infra" OR "ml platform" OR product OR UX OR UI OR design OR research OR campus OR university OR fall OR spring OR summer')
     ap.add_argument("--location", default="Boston, MA")
     ap.add_argument("--remote", action="store_true")
     ap.add_argument("--max-days-old", type=int, default=7)
