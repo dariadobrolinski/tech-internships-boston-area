@@ -268,12 +268,6 @@ def main():
 
     results_sorted = sorted(results, key=sort_key, reverse=True)
 
-    md = format_md(today, results_sorted)
-    out_path = os.path.join(cfg.out_dir, f"jobs-{today}.md")
-    os.makedirs(cfg.out_dir, exist_ok=True)
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(md)
-
     # --- Append to README.md ---
     readme_path = os.path.join(os.path.dirname(__file__), "README.md")
     
@@ -353,8 +347,7 @@ def main():
     with open(readme_path, "w", encoding="utf-8") as f:
         f.writelines(new_lines)
 
-    emailed = send_email_if_configured(subject=f"Boston/Remote Internship Report — {today}", body_md=md)
-    print(f"Wrote {out_path} ({len(results_sorted)} matches). Email sent: {bool(emailed)}.")
+    print(f"Found {len(results_sorted)} total jobs from {total_companies} companies.")
     print(f"README.md: Added {added_count} new jobs, skipped {skipped_count} duplicates.")
 
 if __name__ == "__main__":

@@ -34,47 +34,59 @@ def fetch_adzuna(what: str, where: str = "Boston, MA", max_days_old: int = 7, re
     r.raise_for_status()
     return r.json()
 
-def to_md(items):
-    today = dt.date.today().isoformat()
-    lines = [f"# Adzuna Job Report — {today}", "", "| Title | Company | Location | Created | URL |", "|---|---|---|---|---|"]
-    for it in items:
-        title = it.get("title", "").replace("|", "\|")
-        company = (it.get("company") or {}).get("display_name", "")
-        location = (it.get("location") or {}).get("display_name", "")
-        created = it.get("created", "")
-        url = it.get("redirect_url", "")
-        lines.append(f"| {title} | {company} | {location} | {created} | {url} |")
-    return "\n".join(lines) + "\n"
-
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--what", default="intern systems OR infrastructure OR backend OR reliability OR compiler OR quant OR simulation OR modeling OR 'data infrastructure' OR 'ml systems'")
+    ap.add_argument("--what", default='intern systems OR infrastructure OR backend OR reliability OR compiler OR quant OR simulation OR modeling OR "data infrastructure" OR "ml systems"')
     ap.add_argument("--location", default="Boston, MA")
     ap.add_argument("--remote", action="store_true")
     ap.add_argument("--max-days-old", type=int, default=7)
-    ap.add_argument("--out", default="./reports")
     args = ap.parse_args()
 
     data = fetch_adzuna(args.what, args.location, args.max_days_old, args.remote)
     results = data.get("results", [])
-    os.makedirs(args.out, exist_ok=True)
-    out_path = os.path.join(args.out, f"jobs-{dt.date.today().isoformat()}-adzuna.md")
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(to_md(results))
-    print(f"Wrote {out_path} ({len(results)} results)")
+    print(f"Found {len(results)} results from Adzuna.")
 
     # --- Append to README.md ---
     readme_path = os.path.join(os.path.dirname(__file__), "README.md")
-    # Prepare table rows
+    
+    # If README.md doesn't exist, create with header and table
+    if not os.path.exists(readme_path):
+        with open(readme_path, "w", encoding="utf-8") as f:
+            f.write("# Job Listings\n\n")
+            f.write("| Company Name | Job Title | Location | Date Posted | APPLY |\n")
+            f.write("|---|---|---|---|---|\n")
+    
+    # Read existing README.md and extract existing URLs
+    with open(readme_path, "r", encoding="utf-8") as f:
+        readme_lines = f.readlines()
+    
+    # Extract all existing URLs from the README
+    import re
+    existing_urls = set()
+    for line in readme_lines:
+        # Match URLs in [APPLY](url) format
+        matches = re.findall(r'\[APPLY\]\((https?://[^\)]+)\)', line)
+        existing_urls.update(matches)
+    
+    # Prepare table rows (excluding duplicates)
     table_rows = []
+    added_count = 0
+    skipped_count = 0
     for it in results:
         # Extra strict internship/co-op filter
         title = (it.get("title", "") or "").lower()
         desc = (it.get("description", "") or "").lower()
         if not ("intern" in title or "internship" in title or "co-op" in title or "co op" in title or "intern" in desc or "internship" in desc or "co-op" in desc or "co op" in desc):
             continue
+        
+        url = it.get("redirect_url", "")
+        # Skip if URL already exists in README
+        if url and url in existing_urls:
+            skipped_count += 1
+            continue
+        
         company = (it.get("company") or {}).get("display_name", "")
-        job_title = (it.get("title", "") or "").replace("|", "\\|")
+        job_title = (it.get("title", "") or "").replace("|", r"\|")
         location = (it.get("location") or {}).get("display_name", "")
         # Format date posted as MM/DD/YYYY
         raw_date = it.get("created", "")
@@ -85,25 +97,17 @@ def main():
                 date_posted = datetime.fromisoformat(raw_date[:10]).strftime("%m/%d/%Y")
             except Exception:
                 date_posted = raw_date
-        url = it.get("redirect_url", "")
         apply_link = f"[APPLY]({url})" if url else ""
         table_rows.append(f"| {company} | {job_title} | {location} | {date_posted} | {apply_link} |")
+        added_count += 1
 
-    # If README.md doesn't exist, create with header and table
-    if not os.path.exists(readme_path):
-        with open(readme_path, "w", encoding="utf-8") as f:
-            f.write("# Job Listings\n\n")
-            f.write("| Company Name | Job Title | Location | Date Posted | APPLY |\n")
-            f.write("|---|---|---|---|---|\n")
-    # Read existing README.md
-    with open(readme_path, "r", encoding="utf-8") as f:
-        readme_lines = f.readlines()
     # Find where the table ends
     table_start = None
     for i, line in enumerate(readme_lines):
         if line.strip().startswith("|---|---|---|---|---|"):
             table_start = i
             break
+    
     # If table exists, append rows after it
     if table_start is not None:
         # Find last row in table
@@ -115,9 +119,12 @@ def main():
     else:
         # No table found, add header and table
         new_lines = ["# Job Listings\n\n", "| Company Name | Job Title | Location | Date Posted | APPLY |\n", "|---|---|---|---|---|\n"] + [row + "\n" for row in table_rows] + readme_lines
+    
     # Write back to README.md
     with open(readme_path, "w", encoding="utf-8") as f:
         f.writelines(new_lines)
+    
+    print(f"README.md: Added {added_count} new jobs, skipped {skipped_count} duplicates.")
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # Run all job search reports
 set -e
 
@@ -17,7 +16,7 @@ if [[ -n "$ADZUNA_APP_ID" && -n "$ADZUNA_APP_KEY" ]]; then
     echo ""
     echo "=== Running Adzuna Report ==="
     python3 adzuna_report.py \
-        --what "intern systems OR infrastructure OR backend OR reliability OR compiler OR quant OR simulation OR modeling OR 'data infrastructure' OR 'ml systems'" \
+        --what 'intern systems OR infrastructure OR backend OR reliability OR compiler OR quant OR simulation OR modeling OR "data infrastructure" OR "ml systems"' \
         --location "Boston, MA" \
         --remote
 else
@@ -35,4 +34,4 @@ else
 fi
 
 echo ""
-echo "✅ Done! Check ./reports/ for output"
+echo "✅ Done! Check README.md for all job listings."

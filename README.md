@@ -92,8 +92,7 @@ This will:
 1. Search Greenhouse and Lever job boards for configured companies
 2. (Optional) Search Adzuna for internships in the Boston area
 3. (Optional) Discover new companies via Google Search
-4. Append all results to `README.md`
-5. Generate detailed reports in the `reports/` directory
+4. Append all new results to `README.md` (automatically skips duplicates)
 
 ### Customize Search Parameters
 Edit `run_all.sh` to customize:
