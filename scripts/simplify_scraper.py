@@ -197,6 +197,7 @@ def parse_html_row(cells) -> Optional[JobListing]:
     # Parse date
     date_posted = parse_date(date_cell)
     
+    # Filter out jobs with no relevant locations (format_location returns "" if no relevant locations)
     if not company_name or not title or not location:
         return None
     
@@ -326,14 +327,69 @@ def clean_markdown(text: str) -> str:
     return text.strip()
 
 
+def is_relevant_location(location: str) -> bool:
+    """
+    Check if a location is relevant (Boston area or US remote).
+    Returns True for Boston area locations and US remote positions.
+    Returns False for non-US remote and other locations.
+    """
+    location_lower = location.lower().strip()
+    
+    # First, exclude non-US countries explicitly
+    non_us_patterns = [
+        ', uk', ' uk', ',uk', 'united kingdom',
+        ', canada', ' canada',
+        ', india', ' india',
+        ', mexico', ' mexico',
+        ', europe', ' europe',
+        ', australia', ' australia',
+        ', brazil', ' brazil',
+        ', israel', ' israel',
+        ', china', ' china',
+        ', japan', ' japan',
+        ', singapore', ' singapore',
+        ', germany', ' germany',
+        ', france', ' france',
+        ', netherlands', ' netherlands',
+        ', spain', ' spain',
+        ', italy', ' italy',
+        'remote in uk', 'remote in canada', 'remote in india', 'remote in mexico',
+        'remote in europe', 'remote in australia', 'remote in brazil', 'remote in israel',
+        'remote in china', 'remote in japan', 'remote in singapore', 'remote in germany',
+        'remote in france', 'remote in netherlands', 'remote in spain', 'remote in italy'
+    ]
+    
+    for pattern in non_us_patterns:
+        if pattern in location_lower:
+            return False
+    
+    # Check for Boston area locations
+    for loc in BOSTON_LOCATIONS:
+        if loc in location_lower:
+            return True
+    
+    # Check for Remote (generic) or Remote in USA
+    if location_lower == 'remote' or 'remote in usa' in location_lower or 'remote in us' in location_lower:
+        return True
+    
+    # Check for Remote (no location) or US-specific remote
+    if location_lower.startswith('remote') and 'in' not in location_lower:
+        return True
+    
+    return False
+
+
 def format_location(location: str) -> str:
-    """Format location string with proper separators and truncation."""
+    """Format location string with proper separators, filtering, and truncation."""
     if not location:
         return location
     
-    # Preserve "Remote in USA" and "Remote in Canada" exactly as they are
-    location = location.replace('Remote in USA', '<<<REMOTE_USA>>>')
-    location = location.replace('Remote in Canada', '<<<REMOTE_CANADA>>>')
+    # Protect certain patterns from being split (use lowercase placeholders to avoid regex matches)
+    location = location.replace('Remote in USA', '___remote_usa___')
+    location = location.replace('Remote in UK', '___remote_uk___')
+    location = location.replace('Remote in Canada', '___remote_canada___')
+    location = location.replace('Remote in India', '___remote_india___')
+    location = location.replace('Remote in Europe', '___remote_europe___')
     
     # Add commas between locations that are missing them
     # Pattern: matches state abbreviation followed by capital letter (new location)
@@ -352,13 +408,43 @@ def format_location(location: str) -> str:
     # Handle "X locations" pattern at the start
     location = re.sub(r'(\d+ locations)([A-Z])', r'\1, \2', location)
     
-    # Restore preserved patterns
-    location = location.replace('<<<REMOTE_USA>>>', 'Remote in USA')
-    location = location.replace('<<<REMOTE_CANADA>>>', 'Remote in Canada')
+    # Restore protected patterns
+    location = location.replace('___remote_usa___', 'Remote in USA')
+    location = location.replace('___remote_uk___', 'Remote in UK')
+    location = location.replace('___remote_canada___', 'Remote in Canada')
+    location = location.replace('___remote_india___', 'Remote in India')
+    location = location.replace('___remote_europe___', 'Remote in Europe')
     
-    # Split by common delimiters
-    locations = re.split(r'[,;]', location)
+    # Split by common delimiters (semicolon or comma)
+    locations = re.split(r'[;]|,(?!\s*[A-Z]{2}\s*$)', location)  # Split by semicolon or comma, but not before a state code
     locations = [loc.strip() for loc in locations if loc.strip()]
+    
+    # Merge city with state if they got split (e.g., "Boston" and "MA" -> "Boston, MA")
+    merged_locations = []
+    i = 0
+    while i < len(locations):
+        current = locations[i]
+        # Check if next item is a 2-letter state code
+        if i + 1 < len(locations) and re.match(r'^[A-Z]{2}$', locations[i + 1].strip()):
+            # Merge them
+            merged_locations.append(f"{current}, {locations[i + 1]}")
+            i += 2
+        else:
+            merged_locations.append(current)
+            i += 1
+    
+    locations = merged_locations
+    
+    # Filter to only relevant locations (Boston area or US remote)
+    filtered_locations = []
+    for loc in locations:
+        if is_relevant_location(loc):
+            filtered_locations.append(loc)
+    locations = filtered_locations
+    
+    # If no relevant locations remain, return empty (job will be filtered out)
+    if not locations:
+        return ""
     
     # Remove duplicates while preserving order
     seen = set()
