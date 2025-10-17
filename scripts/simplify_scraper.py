@@ -190,8 +190,9 @@ def parse_html_row(cells) -> Optional[JobListing]:
     # Clean title
     title = clean_markdown(role_cell)
     
-    # Clean location
+    # Clean and format location
     location = clean_markdown(location_cell)
+    location = format_location(location)
     
     # Parse date
     date_posted = parse_date(date_cell)
@@ -239,8 +240,9 @@ def parse_table_row(row: str) -> Optional[JobListing]:
     # Extract role/title
     title = clean_markdown(role_cell)
     
-    # Extract location
+    # Extract and format location
     location = clean_markdown(location_cell)
+    location = format_location(location)
     
     # Extract application URL
     apply_url = extract_url(application_cell)
@@ -312,8 +314,8 @@ def clean_markdown(text: str) -> str:
     # Remove links but keep text
     text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
     
-    # Remove HTML tags
-    text = re.sub(r'<[^>]+>', '', text)
+    # Remove HTML tags but add space between them
+    text = re.sub(r'<[^>]+>', ' ', text)
     
     # Remove emoji and special characters
     text = re.sub(r'[🔥🎓🛂🇺🇸↳]', '', text)
@@ -322,6 +324,74 @@ def clean_markdown(text: str) -> str:
     text = ' '.join(text.split())
     
     return text.strip()
+
+
+def format_location(location: str) -> str:
+    """Format location string with proper separators and truncation."""
+    if not location:
+        return location
+    
+    # Preserve "Remote in USA" and "Remote in Canada" exactly as they are
+    location = location.replace('Remote in USA', '<<<REMOTE_USA>>>')
+    location = location.replace('Remote in Canada', '<<<REMOTE_CANADA>>>')
+    
+    # Add commas between locations that are missing them
+    # Pattern: matches state abbreviation followed by capital letter (new location)
+    # Handle patterns like "MA" + "New York" or "MA" + "NYC" 
+    location = re.sub(r'([A-Z]{2})([A-Z]{2,}[a-z])', r'\1, \2', location)  # MA + NewYork
+    location = re.sub(r'([A-Z]{2})([A-Z]{3,})', r'\1, \2', location)  # MA + NYC
+    location = re.sub(r'([A-Z]{2})([A-Z][a-z])', r'\1, \2', location)  # MA + Washington
+    
+    # Add commas between city, state and another city (lowercase to uppercase transition)
+    location = re.sub(r'([a-z])([A-Z][a-z])', r'\1, \2', location)
+    
+    # Add commas between "Remote in X" patterns
+    location = re.sub(r'(Remote in [A-Z]{2,})([A-Z])', r'\1, \2', location)
+    location = re.sub(r'(Remote in [A-Za-z\s]+?)([A-Z][a-z]+, [A-Z]{2})', r'\1, \2', location)
+    
+    # Handle "X locations" pattern at the start
+    location = re.sub(r'(\d+ locations)([A-Z])', r'\1, \2', location)
+    
+    # Restore preserved patterns
+    location = location.replace('<<<REMOTE_USA>>>', 'Remote in USA')
+    location = location.replace('<<<REMOTE_CANADA>>>', 'Remote in Canada')
+    
+    # Split by common delimiters
+    locations = re.split(r'[,;]', location)
+    locations = [loc.strip() for loc in locations if loc.strip()]
+    
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_locations = []
+    for loc in locations:
+        loc_lower = loc.lower()
+        if loc_lower not in seen:
+            seen.add(loc_lower)
+            unique_locations.append(loc)
+    locations = unique_locations
+    
+    # If too many locations or too long, truncate and add line break
+    if len(locations) > 3 or len(', '.join(locations)) > 50:
+        # Take first 2-3 locations that fit reasonably
+        kept_locations = []
+        total_length = 0
+        
+        for loc in locations[:3]:  # Max 3 locations shown
+            if total_length + len(loc) > 50 and kept_locations:
+                break
+            kept_locations.append(loc)
+            total_length += len(loc) + 2  # +2 for ", "
+        
+        result = ', '.join(kept_locations)
+        
+        # If we truncated, show count
+        if len(locations) > len(kept_locations):
+            remaining = len(locations) - len(kept_locations)
+            result += f'<br>+{remaining} more'
+        
+        return result
+    
+    return ', '.join(locations)
 
 
 def parse_date(date_cell: str) -> str:

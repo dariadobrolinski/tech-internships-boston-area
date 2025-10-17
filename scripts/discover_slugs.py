@@ -4,6 +4,64 @@ from urllib.parse import urlparse
 from datetime import datetime
 
 GH_HOST = "boards.greenhouse.io"
+
+def format_location(location: str) -> str:
+    """Format location string with proper separators and truncation."""
+    if not location:
+        return location
+    
+    # Preserve "Remote in USA" and "Remote in Canada" exactly as they are
+    location = location.replace('Remote in USA', '<<<REMOTE_USA>>>')
+    location = location.replace('Remote in Canada', '<<<REMOTE_CANADA>>>')
+    
+    # Add commas between locations that are missing them
+    location = re.sub(r'([A-Z]{2})([A-Z]{2,}[a-z])', r'\1, \2', location)
+    location = re.sub(r'([A-Z]{2})([A-Z]{3,})', r'\1, \2', location)
+    location = re.sub(r'([A-Z]{2})([A-Z][a-z])', r'\1, \2', location)
+    location = re.sub(r'([a-z])([A-Z][a-z])', r'\1, \2', location)
+    location = re.sub(r'(Remote in [A-Z]{2,})([A-Z])', r'\1, \2', location)
+    location = re.sub(r'(Remote in [A-Za-z\s]+?)([A-Z][a-z]+, [A-Z]{2})', r'\1, \2', location)
+    location = re.sub(r'(\d+ locations)([A-Z])', r'\1, \2', location)
+    
+    # Restore preserved patterns
+    location = location.replace('<<<REMOTE_USA>>>', 'Remote in USA')
+    location = location.replace('<<<REMOTE_CANADA>>>', 'Remote in Canada')
+    
+    locations = re.split(r'[,;]', location)
+    locations = [loc.strip() for loc in locations if loc.strip()]
+    
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_locations = []
+    for loc in locations:
+        loc_lower = loc.lower()
+        if loc_lower not in seen:
+            seen.add(loc_lower)
+            unique_locations.append(loc)
+    locations = unique_locations
+    
+    # If too many locations or too long, truncate and add line break
+    if len(locations) > 3 or len(', '.join(locations)) > 50:
+        kept_locations = []
+        total_length = 0
+        
+        for loc in locations[:3]:
+            if total_length + len(loc) > 50 and kept_locations:
+                break
+            kept_locations.append(loc)
+            total_length += len(loc) + 2
+        
+        result = ', '.join(kept_locations)
+        
+        if len(locations) > len(kept_locations):
+            remaining = len(locations) - len(kept_locations)
+            result += f'<br>+{remaining} more'
+        
+        return result
+    
+    return ', '.join(locations)
+
+GH_HOST = "boards.greenhouse.io"
 LEVER_HOST = "jobs.lever.co"
 SERPAPI_ENDPOINT = "https://serpapi.com/search.json"
 
@@ -155,7 +213,7 @@ def append_jobs_to_readme(jobs_to_add):
         
         company = job.get("company", "")
         job_title = (job.get("title", "") or "").replace("|", "\\|")
-        location = (job.get("location") or "").replace("|", "\\|")
+        location = format_location((job.get("location") or "")).replace("|", "\\|")
         
         # Format date posted as MM/DD/YYYY
         raw_date = job.get("date_posted") or ""
