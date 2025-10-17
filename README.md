@@ -1,4 +1,4 @@
-# Boston Tech Internship Finder
+# Boston Area Tech Internship Finder
 
 An automated script to search and aggregate tech internship opportunities in the Boston area from multiple sources including Greenhouse, Lever, Adzuna, and Google Search (via SERP API).
 
