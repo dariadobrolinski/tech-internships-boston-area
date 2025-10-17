@@ -34,4 +34,12 @@ else
 fi
 
 echo ""
+echo "=== Scraping SimplifyJobs Summer2026-Internships ==="
+python3 scripts/simplify_scraper.py
+
+echo ""
+echo "=== Sorting README by date (newest first) ==="
+python3 scripts/sort_readme.py
+
+echo ""
 echo "✅ Done! Check README.md for all job listings."
