@@ -42,8 +42,8 @@ I know this isn't perfect so if there are any issues feel free to contribute!
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/jobSearcher.git
-cd jobSearcher
+git clone https://github.com/dariadobrolinski/tech-internships-boston-area
+cd tech-internships-boston-area
 ```
 
 ### Install Dependencies
