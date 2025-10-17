@@ -28,10 +28,21 @@ logging.basicConfig(
 
 # ---------- Constants ----------
 SIMPLIFY_README_URL = "https://raw.githubusercontent.com/SimplifyJobs/Summer2026-Internships/dev/README.md"
-BOSTON_LOCATIONS = [
+
+# Boston area cities that are unambiguous (only in MA)
+BOSTON_LOCATIONS_UNAMBIGUOUS = [
     "boston", "cambridge", "somerville", "lexington", "needham", 
-    "waltham", "watertown", "brookline", "newton", "burlington",
-    "quincy", "norwood", "massachusetts", " ma ", ", ma"
+    "waltham", "watertown", "brookline", "quincy", "norwood",
+    "framingham", "lowell", "worcester", "andover", "lawrence",
+    "marlborough", "peabody", "dedham", "acton", "bedford",
+    "pittsfield", "fall river", "attleboro", "westborough",
+    "massachusetts", " ma ", ", ma"
+]
+
+# Cities that exist in multiple states - require MA/Massachusetts to match
+BOSTON_LOCATIONS_AMBIGUOUS = [
+    "newton",      # Newton, MA vs Newton, IA
+    "burlington"   # Burlington, MA vs Burlington, VT
 ]
 
 # ---------- Models ----------
@@ -46,16 +57,38 @@ class JobListing:
     
     def matches_location(self, include_remote: bool = True) -> bool:
         """Check if location matches Boston area or remote."""
+        # Use the same logic as is_relevant_location function
         location_lower = self.location.lower()
         
         # Check for remote
         if include_remote and "remote" in location_lower:
-            return True
+            # Make sure it's US remote, not international
+            if "remote in usa" in location_lower or "remote in us" in location_lower:
+                return True
+            if location_lower == "remote":
+                return True
+            if location_lower.startswith('remote') and 'in' not in location_lower:
+                return True
+            # If it says "remote in <country>", check if it's filtered out
+            non_us_remote = ['remote in uk', 'remote in canada', 'remote in india', 
+                           'remote in europe', 'remote in mexico']
+            for pattern in non_us_remote:
+                if pattern in location_lower:
+                    return False
         
-        # Check for Boston area locations
-        for loc in BOSTON_LOCATIONS:
+        # Check for unambiguous Boston area locations
+        for loc in BOSTON_LOCATIONS_UNAMBIGUOUS:
             if loc in location_lower:
                 return True
+        
+        # Check for ambiguous city names - require MA/Massachusetts
+        for city in BOSTON_LOCATIONS_AMBIGUOUS:
+            if city in location_lower:
+                # Only accept if it also contains MA or Massachusetts
+                if ', ma' in location_lower or ' ma' in location_lower or 'massachusetts' in location_lower:
+                    return True
+                # Otherwise reject
+                return False
         
         return False
 
@@ -363,10 +396,19 @@ def is_relevant_location(location: str) -> bool:
         if pattern in location_lower:
             return False
     
-    # Check for Boston area locations
-    for loc in BOSTON_LOCATIONS:
+    # Check for unambiguous Boston area locations (only exist in MA)
+    for loc in BOSTON_LOCATIONS_UNAMBIGUOUS:
         if loc in location_lower:
             return True
+    
+    # Check for ambiguous city names - require MA/Massachusetts in the location string
+    for city in BOSTON_LOCATIONS_AMBIGUOUS:
+        if city in location_lower:
+            # Only accept if it also contains MA or Massachusetts
+            if ', ma' in location_lower or ' ma' in location_lower or 'massachusetts' in location_lower:
+                return True
+            # Otherwise reject (e.g., "Newton, IA" or "Burlington, VT")
+            return False
     
     # Check for Remote (generic) or Remote in USA
     if location_lower == 'remote' or 'remote in usa' in location_lower or 'remote in us' in location_lower:
