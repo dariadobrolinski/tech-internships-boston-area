@@ -85,5 +85,5 @@ boston_locations:
   - Norwood
 
 # Global flags
-include_remote: false
+include_remote: true
 out_dir: ./reports

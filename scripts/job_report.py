@@ -220,7 +220,7 @@ def send_email_if_configured(subject: str, body_md: str) -> bool:
 # ---------- Main ----------
 def main():
     parser = argparse.ArgumentParser(description="Daily Boston internship report (Greenhouse/Lever).")
-    parser.add_argument("--config", default="companies.yml", help="Path to YAML config file")
+    parser.add_argument("--config", default="config/companies.yml", help="Path to YAML config file")
     parser.add_argument("--include-remote", action="store_true", help="Include remote U.S. roles")
     parser.add_argument("--out", dest="out_dir", default=None, help="Output directory for reports")
     args = parser.parse_args()
@@ -269,7 +269,7 @@ def main():
     results_sorted = sorted(results, key=sort_key, reverse=True)
 
     # --- Append to README.md ---
-    readme_path = os.path.join(os.path.dirname(__file__), "README.md")
+    readme_path = os.path.join(os.path.dirname(__file__), "..", "README.md")
     
     # If README.md doesn't exist, create with header and table
     if not os.path.exists(readme_path):

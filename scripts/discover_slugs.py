@@ -120,7 +120,7 @@ def normalize_lever_job(job, company_name):
 
 def append_jobs_to_readme(jobs_to_add):
     """Append new jobs to README.md in the same format as job_report.py."""
-    readme_path = "README.md"
+    readme_path = os.path.join(os.path.dirname(__file__), "..", "README.md")
     
     # If README.md doesn't exist, create with header and table
     if not Path(readme_path).exists():
@@ -206,7 +206,7 @@ def main():
     ap.add_argument("--cities", default="Boston,Cambridge,Somerville,Quincy,Newton,Brookline,Waltham,Watertown,Burlington,Lexington,Needham")
     ap.add_argument("--keywords", default="intern internship software engineer backend infrastructure systems reliability compiler quant data platform ml ai")
     ap.add_argument("--max", type=int, default=100)
-    ap.add_argument("--config", default="companies.yml")
+    ap.add_argument("--config", default="config/companies.yml")
     args = ap.parse_args()
 
     api_key = os.environ.get("SERPAPI_KEY")

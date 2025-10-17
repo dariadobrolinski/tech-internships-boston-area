@@ -1,7 +1,7 @@
 # Run all job search reports
 set -e
 
-cd ~/jobSearcher
+cd ~/tech-internships-boston-area
 
 # Load environment variables from .env if it exists
 if [[ -f .env ]]; then
@@ -9,13 +9,13 @@ if [[ -f .env ]]; then
 fi
 
 echo "=== Running Greenhouse/Lever Report ==="
-python3 job_report.py --include-remote
+python3 scripts/job_report.py --include-remote --config config/companies.yml
 
 # Only run Adzuna if credentials are set
 if [[ -n "$ADZUNA_APP_ID" && -n "$ADZUNA_APP_KEY" ]]; then
     echo ""
     echo "=== Running Adzuna Report ==="
-    python3 adzuna_report.py \
+    python3 scripts/adzuna_report.py \
         --what 'intern systems OR infrastructure OR backend OR reliability OR compiler OR quant OR simulation OR modeling OR "data infrastructure" OR "ml systems"' \
         --location "Boston, MA" \
         --remote
@@ -27,7 +27,7 @@ fi
 if [[ -n "$SERPAPI_KEY" ]]; then
     echo ""
     echo "=== Discovering New Company Slugs ==="
-    python3 discover_slugs.py --max 50
+    python3 scripts/discover_slugs.py --max 50 --config config/companies.yml
 else
     echo ""
     echo "ℹ️  Skipping slug discovery (set SERPAPI_KEY to enable)"

@@ -4,7 +4,10 @@ An automated script to search and aggregate tech internship opportunities in the
 
 I know this isn't perfect so if there are any issues feel free to contribute!
 
-**[Setup Instructions](#setup-instructions)**
+📖 **Documentation**
+- [Setup Instructions](#setup-instructions)
+- [API Keys Guide](docs/API_KEYS.md) - How to get Adzuna & SERP API keys
+- [Contributing Guide](docs/CONTRIBUTING.md) - How to contribute to this project
 
 ---
 
@@ -66,6 +69,8 @@ SERPAPI_KEY=your_serpapi_key
 - **Adzuna**: Sign up at [adzuna.com/developers](https://developer.adzuna.com/)
 - **SERP API**: Sign up at [serpapi.com](https://serpapi.com/)
 
+📖 **Need detailed setup instructions?** See the [API Keys Guide](docs/API_KEYS.md) for step-by-step instructions.
+
 > Note: The script will work with just Greenhouse/Lever searches even without API keys. The API keys are optional but enable additional job sources.
 
 ### Edit Configuration
@@ -105,7 +110,7 @@ Run daily at 9 AM:
 ```bash
 crontab -e
 # Add this line:
-0 9 * * * cd ~/jobSearcher && ./run_all.sh >> ~/tech-internships-boston-area/cron.log 2>&1
+0 9 * * * cd ~/tech-internships-boston-area && ./run_all.sh >> ~/tech-internships-boston-area/cron.log 2>&1
 ```
 
 ---

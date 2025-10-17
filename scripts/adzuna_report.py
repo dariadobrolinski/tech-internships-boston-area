@@ -47,7 +47,7 @@ def main():
     print(f"Found {len(results)} results from Adzuna.")
 
     # --- Append to README.md ---
-    readme_path = os.path.join(os.path.dirname(__file__), "README.md")
+    readme_path = os.path.join(os.path.dirname(__file__), "..", "README.md")
     
     # If README.md doesn't exist, create with header and table
     if not os.path.exists(readme_path):
