@@ -344,8 +344,11 @@ def main():
     import re
     existing_urls = set()
     for line in readme_lines:
-        # Match URLs in [APPLY](url) format
+        # Match URLs in [APPLY](url) format (old markdown style)
         matches = re.findall(r'\[APPLY\]\((https?://[^\)]+)\)', line)
+        existing_urls.update(matches)
+        # Match URLs in HTML <a href="url"> format (new HTML style)
+        matches = re.findall(r'<a href="(https?://[^"]+)"', line)
         existing_urls.update(matches)
     
     # Prepare table rows (internships only, with date posted, excluding duplicates)
@@ -378,7 +381,8 @@ def main():
                 date_posted = datetime.fromisoformat(raw_date[:10]).strftime("%m/%d/%Y")
             except Exception:
                 date_posted = raw_date
-        apply_link = f"[APPLY]({url})" if url else ""
+        # Use HTML link with target="_blank" to open in new tab
+        apply_link = f'<a href="{url}" target="_blank">APPLY</a>' if url else ""
         table_rows.append(f"| {company} | {job_title} | {location} | {date_posted} | {apply_link} |")
         added_count += 1
 

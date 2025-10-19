@@ -33,7 +33,7 @@ SIMPLIFY_README_URL = "https://raw.githubusercontent.com/SimplifyJobs/Summer2026
 BOSTON_LOCATIONS_UNAMBIGUOUS = [
     "boston", "cambridge", "somerville", "lexington", "needham", 
     "waltham", "watertown", "brookline", "quincy", "norwood",
-    "framingham", "lowell", "worcester", "andover", "lawrence",
+    "framingham", "lowell", "worcester", "andover",
     "marlborough", "peabody", "dedham", "acton", "bedford",
     "pittsfield", "fall river", "attleboro", "westborough",
     "massachusetts", " ma ", ", ma"
@@ -42,7 +42,8 @@ BOSTON_LOCATIONS_UNAMBIGUOUS = [
 # Cities that exist in multiple states - require MA/Massachusetts to match
 BOSTON_LOCATIONS_AMBIGUOUS = [
     "newton",      # Newton, MA vs Newton, IA
-    "burlington"   # Burlington, MA vs Burlington, VT
+    "burlington",  # Burlington, MA vs Burlington, VT
+    "lawrence"     # Lawrence, MA vs Lawrence, KS
 ]
 
 # ---------- Models ----------
@@ -59,6 +60,17 @@ class JobListing:
         """Check if location matches Boston area or remote."""
         # Use the same logic as is_relevant_location function
         location_lower = self.location.lower()
+        
+        # Exclude other US states explicitly (not MA)
+        non_ma_states = [
+            ', ks', ', kansas', ', az', ', arizona', ', co', ', colorado',
+            ', vt', ', vermont', ', ia', ', iowa', ', ny', ', new york',
+            ', ca', ', california', ', tx', ', texas', ', fl', ', florida',
+            ', wa', ', washington', 'denver, colorado', 'tempe, az'
+        ]
+        for pattern in non_ma_states:
+            if pattern in location_lower:
+                return False
         
         # Check for remote
         if include_remote and "remote" in location_lower:
@@ -396,6 +408,39 @@ def is_relevant_location(location: str) -> bool:
         if pattern in location_lower:
             return False
     
+    # Exclude other US states explicitly (not MA)
+    non_ma_states = [
+        ', ks', ', kansas',  # Lawrence, KS
+        ', az', ', arizona',  # Tempe, AZ
+        ', co', ', colorado',  # Denver, CO
+        ', vt', ', vermont',  # Burlington, VT
+        ', ia', ', iowa',  # Newton, IA
+        ', ny', ', new york',
+        ', ca', ', california',
+        ', tx', ', texas',
+        ', fl', ', florida',
+        ', wa', ', washington',
+        ', or', ', oregon',
+        ', il', ', illinois',
+        ', pa', ', pennsylvania',
+        ', oh', ', ohio',
+        ', nc', ', north carolina',
+        ', ga', ', georgia',
+        ', mi', ', michigan',
+        ', nj', ', new jersey',
+        ', va', ', virginia',
+        ', ct', ', connecticut',
+        ', ri', ', rhode island',
+        ', nh', ', new hampshire',
+        ', me', ', maine',
+        'denver, colorado',
+        'tempe, az'
+    ]
+    
+    for pattern in non_ma_states:
+        if pattern in location_lower:
+            return False
+    
     # Check for unambiguous Boston area locations (only exist in MA)
     for loc in BOSTON_LOCATIONS_UNAMBIGUOUS:
         if loc in location_lower:
@@ -610,8 +655,8 @@ def format_for_readme(jobs: List[JobListing]) -> str:
     
     rows = []
     for job in jobs:
-        # Format the apply link
-        apply_link = f"[APPLY]({job.apply_url})" if job.apply_url else "N/A"
+        # Format the apply link with target="_blank" to open in new tab
+        apply_link = f'<a href="{job.apply_url}" target="_blank">APPLY</a>' if job.apply_url else "N/A"
         
         row = f"| {job.company} | {job.title} | {job.location} | {job.date_posted} | {apply_link} |"
         rows.append(row)

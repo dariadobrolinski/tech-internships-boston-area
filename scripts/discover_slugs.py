@@ -195,8 +195,11 @@ def append_jobs_to_readme(jobs_to_add):
     import re
     existing_urls = set()
     for line in readme_lines:
-        # Match URLs in [APPLY](url) format
+        # Match URLs in [APPLY](url) format (old markdown style)
         matches = re.findall(r'\[APPLY\]\((https?://[^\)]+)\)', line)
+        existing_urls.update(matches)
+        # Match URLs in HTML <a href="url"> format (new HTML style)
+        matches = re.findall(r'<a href="(https?://[^"]+)"', line)
         existing_urls.update(matches)
     
     # Prepare table rows (excluding duplicates)
@@ -225,7 +228,8 @@ def append_jobs_to_readme(jobs_to_add):
             except Exception:
                 date_posted = raw_date
         
-        apply_link = f"[APPLY]({url})" if url else ""
+        # Use HTML link with target="_blank" to open in new tab
+        apply_link = f'<a href="{url}" target="_blank">APPLY</a>' if url else ""
         table_rows.append(f"| {company} | {job_title} | {location} | {date_posted} | {apply_link} |")
         added_count += 1
 
