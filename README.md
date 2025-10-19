@@ -211,6 +211,22 @@ I know this isn't perfect so if there are any issues feel free to contribute!
 | DraftKings | Software Engineer Intern | Boston, MA | 09/17/2025 | [APPLY](https://draftkings.wd1.myworkdayjobs.com/en-US/Campus_Career_Portal/job/Boston-MA/Software-Engineer-Intern--Summer-2026-_JR12655?utm_source=Simplify&ref=Simplify) |
 | The Hanover | Associate Solutions Developer | Worcester, MA | 09/17/2025 | [APPLY](https://jobs.dayforcehcm.com/en-US/thg/ALLCAREERS/jobs/38827?utm_source=Simplify&ref=Simplify) |
 | Dropbox | Software Engineer Intern | Remote in USA | 09/17/2025 | [APPLY](https://boards.greenhouse.io/embed/job_app?token=7183241&utm_source=Simplify&ref=Simplify) |
+| Datadog | Sales Development Representative - Summer 2026 Graduates (Spanish Speaking) | Boston, Massachusetts, USA | 10/06/2025 | [APPLY](https://careers.datadoghq.com/detail/7251992/?gh_jid=7251992) |
+| Datadog | Sales Development Representative - Summer 2026 Graduates (Portuguese Speaking) | Boston, Massachusetts, USA | 10/06/2025 | [APPLY](https://careers.datadoghq.com/detail/7252012/?gh_jid=7252012) |
+| Datadog | Sales Development Representative - Summer 2026 Graduates (Denver) | Denver, Colorado, USA | 10/06/2025 | [APPLY](https://careers.datadoghq.com/detail/7248869/?gh_jid=7248869) |
+| Datadog | Sales Development Representative - Summer 2026 Graduates (Boston) | Boston, Massachusetts, USA | 10/06/2025 | [APPLY](https://careers.datadoghq.com/detail/7248738/?gh_jid=7248738) |
+| Datadog | Product Management Intern | New York, USA | 10/03/2025 | [APPLY](https://careers.datadoghq.com/detail/7127832/?gh_jid=7127832) |
+| Datadog | AI Research Engineer – Datadog AI Research (DAIR) | New York, USA | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7183013/?gh_jid=7183013) |
+| Datadog | AI Research Scientist – Datadog AI Research (DAIR) | New York, USA | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/6572669/?gh_jid=6572669) |
+| Datadog | Cloud Researcher, Infrastructure Monitoring | New York, USA | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7238269/?gh_jid=7238269) |
+| Datadog | Developer Advocate, Cloud Observability | New York, USA, Remote | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7125737/?gh_jid=7125737) |
+| Datadog | Enterprise Security Sales Specialist | Florida, USA, Remote<br>+1 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7132132/?gh_jid=7132132) |
+| Datadog | Enterprise Security Sales Specialist | Chicago, Illinois, USA<br>+2 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7129428/?gh_jid=7129428) |
+| Datadog | Enterprise Security Sales Specialist | Boston, Massachusetts, USA<br>+1 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7129425/?gh_jid=7129425) |
+| Datadog | Product Designer II - Integrations Experience | New York, USA | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7236172/?gh_jid=7236172) |
+| Datadog | Product Solutions Architect 3 - APM | Boston, Massachusetts, USA<br>+1 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/6825839/?gh_jid=6825839) |
+| Datadog | Product Solutions Architect (Serverless) | Boston, Massachusetts, USA<br>+1 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7191402/?gh_jid=7191402) |
+| Datadog | Security Engineer II - Cloud Security | Boston, Massachusetts, USA<br>+3 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7205511/?gh_jid=7205511) |
 
 ---
 

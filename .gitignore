@@ -4,3 +4,4 @@
 command.txt
 run_local.sh
 auto_update.sh
+__pycache__
