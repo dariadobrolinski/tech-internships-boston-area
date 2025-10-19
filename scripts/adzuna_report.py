@@ -156,8 +156,8 @@ def main():
                 date_posted = datetime.fromisoformat(raw_date[:10]).strftime("%m/%d/%Y")
             except Exception:
                 date_posted = raw_date
-        # Use HTML link with target="_blank" to open in new tab
-        apply_link = f'<a href="{url}" target="_blank">APPLY</a>' if url else ""
+        # Format apply link
+        apply_link = f'[APPLY]({url})' if url else ""
         table_rows.append(f"| {company} | {job_title} | {location} | {date_posted} | {apply_link} |")
         added_count += 1
 

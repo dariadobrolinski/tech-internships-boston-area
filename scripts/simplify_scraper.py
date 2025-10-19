@@ -655,8 +655,8 @@ def format_for_readme(jobs: List[JobListing]) -> str:
     
     rows = []
     for job in jobs:
-        # Format the apply link with target="_blank" to open in new tab
-        apply_link = f'<a href="{job.apply_url}" target="_blank">APPLY</a>' if job.apply_url else "N/A"
+        # Format the apply link
+        apply_link = f'[APPLY]({job.apply_url})' if job.apply_url else "N/A"
         
         row = f"| {job.company} | {job.title} | {job.location} | {job.date_posted} | {apply_link} |"
         rows.append(row)
