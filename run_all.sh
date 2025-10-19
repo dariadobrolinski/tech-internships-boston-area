@@ -17,8 +17,7 @@ if [[ -n "$ADZUNA_APP_ID" && -n "$ADZUNA_APP_KEY" ]]; then
     echo "=== Running Adzuna Report ==="
     python3 scripts/adzuna_report.py \
         --what 'intern systems OR infrastructure OR backend OR reliability OR compiler OR quant OR simulation OR modeling OR "data infrastructure" OR "ml systems"' \
-        --location "Boston, MA" \
-        --remote
+        --location "Boston, MA"
 else
     echo ""
     echo "ℹ️  Skipping Adzuna (set ADZUNA_APP_ID and ADZUNA_APP_KEY to enable)"
