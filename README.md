@@ -15,7 +15,7 @@ I know this isn't perfect so if there are any issues feel free to contribute!
 ## Job Listings
 
 | Company Name | Job Title | Location | Date Posted | APPLY |
-|---|---|---|---|---|
+|---|---|---|---|:-:|
 | Toast | MBA Product Manager Intern | Boston, MA | 10/18/2025 | <a href="https://boards.greenhouse.io/embed/job_app?token=7254875&utm_source=Simplify&ref=Simplify" target="_blank">APPLY</a> |
 | CareSource | 2026 Summer Internship - Data Science | Remote | 10/18/2025 | <a href="https://caresource.wd1.myworkdayjobs.com/en-US/caresource/job/Remote/XMLNAME-2026-Summer-Internship---Data-Science_R10679?utm_source=Simplify&ref=Simplify" target="_blank">APPLY</a> |
 | Token Metrics | Crypto Data Scientist / Machine Learning - LLM Engineer Intern | Remote | 10/18/2025 | <a href="https://jobs.lever.co/tokenmetrics/62b16e29-602d-4f52-ba4b-89c02b6dee41?utm_source=Simplify&ref=Simplify" target="_blank">APPLY</a> |
