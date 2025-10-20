@@ -1,10 +1,14 @@
-# Job Listings
+# Boston Area Tech Internship Finder
 
-| Company Name | Job Title | Location | Date Posted | APPLY |
-|---|---|---|---|---|
-| Zipcar | Member Services Co-Op-Knowledge and Quality Enablement | Boston, MA | 10/19/2025 | [APPLY](https://avisbudget.wd1.myworkdayjobs.com/Zipcar_Careers/job/35-Thomson-Pl-Boston-02210/Member-Services-Co-Op--Knowledge-and-Quality-Enablement_R0181487?utm_source=Simplify&ref=Simplify) |
-| State Street | Product Intern - Product Team | Quincy, MA | 10/10/2025 | [APPLY](https://statestreet.wd1.myworkdayjobs.com/en-US/Global/job/Quincy-Massachusetts/State-Street-Product-Office---Summer-Internship-2026_R-778817?utm_source=Simplify&ref=Simplify) |
-| Datadog | Sales Development Representative - Summer 2026 Graduates (Denver) | Denver, Colorado, USA | 10/06/2025 | [APPLY](https://careers.datadoghq.com/detail/7248869/?gh_jid=7248869) |
+An automated script to search and aggregate tech internship opportunities in the Boston area (and remote) from multiple sources including Greenhouse, Lever, Adzuna, SimplifyJobs, and Google Search (via SERP API).
+
+I know this isn't perfect so if there are any issues feel free to contribute!
+
+📖 **Documentation**
+- [Setup Instructions](#setup-instructions)
+- [Data Sources](#data-sources) - Where job listings come from
+- [API Keys Guide](docs/API_KEYS.md) - How to get Adzuna & SERP API keys
+- [Contributing Guide](docs/CONTRIBUTING.md) - How to contribute to this project
 
 ---
 

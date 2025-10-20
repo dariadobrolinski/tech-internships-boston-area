@@ -389,7 +389,8 @@ def main():
     # Find where the table ends
     table_start = None
     for i, line in enumerate(readme_lines):
-        if line.strip().startswith("|---|---|---|---|---|"):
+        # Match both old and new table separator formats
+        if line.strip().startswith("|---|---|---|---|") and "---" in line:
             table_start = i
             break
     
