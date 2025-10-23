@@ -21,7 +21,7 @@ I know this isn't perfect so if there are any issues feel free to contribute!
 | Experian | Data Analyst Intern | Remote in USA | 10/22/2025 | [APPLY](https://jobs.smartrecruiters.com/Experian/744000089133739?utm_source=github-vansh-ouckah) |
 | Clerkie | Software Engineer Intern | Remote in USA | 10/22/2025 | [APPLY](https://www.getfiber.ai/careers?gh_jid=4949164007&utm_source=github-vansh-ouckah) |
 | Experian | Full Stack SWE Summer Intern - Remote & Paid | Remote in USA | 10/22/2025 | [APPLY](https://jobs.smartrecruiters.com/Experian/744000089140956?utm_source=Simplify&ref=Simplify) |
-| Second Dinner | 2026] Product Manager Intern - Unannounced Super Fun Video Game | CARemote in USA | 10/22/2025 | [APPLY](https://jobs.ashbyhq.com/SecondDinner/15d9eea6-8ab6-486d-84ac-9de05be54901/application?utm_source=Simplify&ref=Simplify) |
+| Second Dinner | 2026] Product Manager Intern - Unannounced Super Fun Video Game | Remote in USA | 10/22/2025 | [APPLY](https://jobs.ashbyhq.com/SecondDinner/15d9eea6-8ab6-486d-84ac-9de05be54901/application?utm_source=Simplify&ref=Simplify) |
 | Microsoft | Research Intern - Machine Learning for Biology and Healthcare | Cambridge, MA | 10/22/2025 | [APPLY](https://jobs.careers.microsoft.com/global/en/job/1900590?utm_source=Simplify&ref=Simplify) |
 | J.M. Smucker | Data Science Intern - Masters or PhD - Summer 2026 | Remote in USA | 10/22/2025 | [APPLY](https://smucker.wd5.myworkdayjobs.com/US_External_Careers/job/Working-Remote-USA/Data-Science-Intern--Masters-or-PhD---Summer-2026_114447?utm_source=Simplify&ref=Simplify) |
 | Datadog | Internal Communications Specialist - NYC | New York, USA | 10/22/2025 | [APPLY](https://careers.datadoghq.com/detail/7341441/?gh_jid=7341441) |
