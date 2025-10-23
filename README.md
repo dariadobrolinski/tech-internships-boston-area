@@ -17,19 +17,16 @@ I know this isn't perfect so if there are any issues feel free to contribute!
 | Company Name | Job Title | Location | Date Posted | APPLY |
 |---|---|---|---|:-:|
 | Sanofi | Agentic AI for CMC Digitalization | Framingham, MA | 10/23/2025 | [APPLY](https://sanofi.wd3.myworkdayjobs.com/en-US/SanofiCareers/job/Framingham-MA/Summer-2026-Intern---Agentic-AI-for-CMC-Digitalization_R2816447?utm_source=Simplify&ref=Simplify) |
-| Second Dinner | 2026] AI/ML Engineer Intern | Remote in USA | 10/23/2025 | [APPLY](https://jobs.ashbyhq.com/SecondDinner/16e290f9-d116-4a81-b6f4-ff453722eb38/application?utm_source=Simplify&ref=Simplify) |
+| Second Dinner | 2026 AI/ML Engineer Intern | Remote in USA | 10/23/2025 | [APPLY](https://jobs.ashbyhq.com/SecondDinner/16e290f9-d116-4a81-b6f4-ff453722eb38/application?utm_source=Simplify&ref=Simplify) |
 | Experian | Data Analyst Intern | Remote in USA | 10/22/2025 | [APPLY](https://jobs.smartrecruiters.com/Experian/744000089133739?utm_source=github-vansh-ouckah) |
 | Clerkie | Software Engineer Intern | Remote in USA | 10/22/2025 | [APPLY](https://www.getfiber.ai/careers?gh_jid=4949164007&utm_source=github-vansh-ouckah) |
 | Experian | Full Stack SWE Summer Intern - Remote & Paid | Remote in USA | 10/22/2025 | [APPLY](https://jobs.smartrecruiters.com/Experian/744000089140956?utm_source=Simplify&ref=Simplify) |
-| Second Dinner | 2026] Product Manager Intern - Unannounced Super Fun Video Game | Remote in USA | 10/22/2025 | [APPLY](https://jobs.ashbyhq.com/SecondDinner/15d9eea6-8ab6-486d-84ac-9de05be54901/application?utm_source=Simplify&ref=Simplify) |
+| Second Dinner | 2026 Product Manager Intern - Unannounced Super Fun Video Game | Remote in USA | 10/22/2025 | [APPLY](https://jobs.ashbyhq.com/SecondDinner/15d9eea6-8ab6-486d-84ac-9de05be54901/application?utm_source=Simplify&ref=Simplify) |
 | Microsoft | Research Intern - Machine Learning for Biology and Healthcare | Cambridge, MA | 10/22/2025 | [APPLY](https://jobs.careers.microsoft.com/global/en/job/1900590?utm_source=Simplify&ref=Simplify) |
 | J.M. Smucker | Data Science Intern - Masters or PhD - Summer 2026 | Remote in USA | 10/22/2025 | [APPLY](https://smucker.wd5.myworkdayjobs.com/US_External_Careers/job/Working-Remote-USA/Data-Science-Intern--Masters-or-PhD---Summer-2026_114447?utm_source=Simplify&ref=Simplify) |
-| Datadog | Internal Communications Specialist - NYC | New York, USA | 10/22/2025 | [APPLY](https://careers.datadoghq.com/detail/7341441/?gh_jid=7341441) |
 | Microsoft | Research Intern, Machine Learning and Statistics | Cambridge, MA | 10/21/2025 | [APPLY](https://jobs.careers.microsoft.com/global/en/job/1900003?utm_source=github-vansh-ouckah) |
 | Clerkie | Software Engineer Internship | Remote in USA | 10/21/2025 | [APPLY](https://www.getfiber.ai/careers?gh_jid=4949164007&utm_source=Simplify&ref=Simplify) |
 | Pega | Software Engineer Summer Intern, Software Delivery Excellence Alliance | Waltham, MA | 10/21/2025 | [APPLY](https://www.pega.com/about/careers/22692/software-engineer-summer-intern-software-delivery-excellence-alliance?utm_source=Simplify&ref=Simplify) |
-| Datadog | Campus Programs Operations Associate - NYC | New York, USA | 10/21/2025 | [APPLY](https://careers.datadoghq.com/detail/7338982/?gh_jid=7338982) |
-| Datadog | Sales Development Representative - Summer 2026 Graduates (Denver) | Denver, Colorado, USA | 10/20/2025 | [APPLY](https://careers.datadoghq.com/detail/7248869/?gh_jid=7248869) |
 | Zipcar | Member Services Co-Op-Knowledge and Quality Enablement | Boston, MA | 10/19/2025 | [APPLY](https://avisbudget.wd1.myworkdayjobs.com/Zipcar_Careers/job/35-Thomson-Pl-Boston-02210/Member-Services-Co-Op--Knowledge-and-Quality-Enablement_R0181487?utm_source=Simplify&ref=Simplify) |
 | Clerkie | Software Engineer Internship - 4 openings | Remote | 10/18/2025 | [APPLY](https://www.clerkie.io) |
 | Pega | Software Engineer Intern | Waltham, MA | 10/18/2025 | [APPLY](https://www.pega.com/about/careers/22692/software-engineer-summer-intern-software-delivery-excellence-alliance?utm_source=github-vansh-ouckah) |
@@ -75,7 +72,7 @@ I know this isn't perfect so if there are any issues feel free to contribute!
 | Wealth.com | Software Engineer Intern | Remote | 10/13/2025 | [APPLY](https://jobs.lever.co/WealthFinancialTechnologies/a4fe7c66-0e2a-4e06-a029-2f70c30a8e0a?utm_source=github-vansh-ouckah) |
 | Hone Health | Data Science Intern | Remote in USA | 10/13/2025 | [APPLY](https://job-boards.greenhouse.io/honehealth/jobs/4945568008?utm_source=Simplify&ref=Simplify) |
 | Sephora | IT Warehouse & Distribution Automation Intern | Remote | 10/11/2025 | [APPLY](https://join.sephora.com/careers/job/790312348148?utm_source=github-vansh-ouckah) |
-| Eversource Energy | Software Engineering Intern - Software Engineering | CT Norwood, MA | 10/11/2025 | [APPLY](https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Windsor-CT/Summer-2026-Software-Engineering-Intern_R-028852?utm_source=github-vansh-ouckah) |
+| Eversource Energy | Software Engineering Intern - Software Engineering | Norwood, MA | 10/11/2025 | [APPLY](https://eversource.wd1.myworkdayjobs.com/ExternalSite/job/Windsor-CT/Summer-2026-Software-Engineering-Intern_R-028852?utm_source=github-vansh-ouckah) |
 | CenturyLink | Intern - Software Developer | Remote in USA | 10/11/2025 | [APPLY](https://internaljobs.centurylink.com/job/Remote-Intern-Software-Developer-Summer-2026/1333501200/?ats=successfactors&utm_source=github-vansh-ouckah) |
 | Biogen | Machine Learning Co-op | Cambridge, MA | 10/11/2025 | [APPLY](https://biibhr.wd3.myworkdayjobs.com/en-US/external/job/Cambridge-MA/Co-op--Machine-Learning_REQ21752?utm_source=github-vansh-ouckah) |
 | Altice USA | Intern – Customer Care | Wakefield, MA | 10/11/2025 | [APPLY](https://www.alticeusacareers.com/job/Bethpage-Intern-Customer-Care-NY-11714/1333655100/?ats=successfactors&utm_source=Simplify&ref=Simplify) |
@@ -160,7 +157,6 @@ I know this isn't perfect so if there are any issues feel free to contribute!
 | Fidelity | Quantitative Development & Data Science Internship | Boston, MA | 10/03/2025 | [APPLY](https://fmr.wd1.myworkdayjobs.com/en-US/targeted/job/Boston-MA/Quantitative-Development---Data-Science-Internship_2115892?utm_source=Simplify&ref=Simplify) |
 | RTX | Intern - Full Stack Developer | Cambridge, MA | 10/03/2025 | [APPLY](https://globalhr.wd5.myworkdayjobs.com/rec_rtx_ext_gateway/job/MA105-BBN-Headquarters-10-Moulton-Street---Cambridge-MA-02138-USA/Summer-2026-Intern---Full-Stack-Developer--Onsite-_01795503?utm_source=Simplify&ref=Simplify) |
 | Datadog | Software Engineering Intern (Summer) | Boston, Massachusetts | 10/03/2025 | [APPLY](https://careers.datadoghq.com/detail/7158137/?gh_jid=7158137) |
-| Datadog | Product Management Intern | New York, USA | 10/03/2025 | [APPLY](https://careers.datadoghq.com/detail/7127832/?gh_jid=7127832) |
 | State Street | Software Engineer - Co-Op | Quincy, Massachusetts | 10/02/2025 | [APPLY](https://www.statestreet.com) |
 | RTX | Software Engineer Intern - Multiple Teams | Marlborough, MA | 10/02/2025 | [APPLY](https://globalhr.wd5.myworkdayjobs.com/rec_rtx_ext_gateway/job/MA801-Marlborough-MA-1001-Boston-Post-Road-Building-2-Marlborough-MA-01752-USA/XMLNAME-2026-Intern---Software-Engineer-Intern---Onsite--MA-_01797376?utm_source=Simplify&ref=Simplify) |
 | Formlabs | Manufacturing Test Software Intern - Winter/Spring 2026 | Somerville, MA | 10/01/2025 | [APPLY](https://formlabs.com) |
@@ -173,14 +169,7 @@ I know this isn't perfect so if there are any issues feel free to contribute!
 | Autodesk | Intern - AI Agent and Knowledge Graphs - Research - AI Technologies | Boston, MA | 10/01/2025 | [APPLY](https://autodesk.wd1.myworkdayjobs.com/en-US/uni/job/Boston-MA-USA/Intern--AI-Agent-and-Knowledge-Graphs_25WD91982?utm_source=Simplify&ref=Simplify) |
 | Rockwell Automation | Intern - Test Engineering - Multiple Teams | Lowell, MA | 10/01/2025 | [APPLY](https://rockwellautomation.wd1.myworkdayjobs.com/en-US/External_Rockwell_Automation/job/United-States-of-America-Chelmsford/Intern--Test-Engineering---Chelmsford_R25-8009-1?utm_source=Simplify&ref=Simplify) |
 | State Street | Efx Developer – Co-Op | Quincy, MA | 10/01/2025 | [APPLY](https://statestreet.wd1.myworkdayjobs.com/en-US/Global/job/Quincy-Massachusetts/eFX-Developer--Co-Op_R-778439?utm_source=Simplify&ref=Simplify) |
-| Datadog | AI Research Engineer – Datadog AI Research (DAIR) | New York, USA | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7183013/?gh_jid=7183013) |
-| Datadog | AI Research Scientist – Datadog AI Research (DAIR) | New York, USA | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/6572669/?gh_jid=6572669) |
-| Datadog | Cloud Researcher, Infrastructure Monitoring | New York, USA | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7238269/?gh_jid=7238269) |
-| Datadog | Developer Advocate, Cloud Observability | New York, USA, Remote | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7125737/?gh_jid=7125737) |
-| Datadog | Enterprise Security Sales Specialist | Florida, USA, Remote<br>+1 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7132132/?gh_jid=7132132) |
-| Datadog | Enterprise Security Sales Specialist | Chicago, Illinois, USA<br>+2 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7129428/?gh_jid=7129428) |
 | Datadog | Enterprise Security Sales Specialist | Boston, Massachusetts, USA<br>+1 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7129425/?gh_jid=7129425) |
-| Datadog | Product Designer II - Integrations Experience | New York, USA | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7236172/?gh_jid=7236172) |
 | Datadog | Product Solutions Architect 3 - APM | Boston, Massachusetts, USA<br>+1 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/6825839/?gh_jid=6825839) |
 | Datadog | Product Solutions Architect (Serverless) | Boston, Massachusetts, USA<br>+1 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7191402/?gh_jid=7191402) |
 | Datadog | Security Engineer II - Cloud Security | Boston, Massachusetts, USA<br>+3 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7205511/?gh_jid=7205511) |

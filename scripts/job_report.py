@@ -195,8 +195,24 @@ def location_matches(loc: str, boston_locations: List[str], include_remote: bool
     l = (loc or "").lower()
     if any(city in l for city in boston_locations):
         return True
-    if include_remote and any(rem in l for rem in ("remote", "anywhere", "distributed", "usa", "united states")):
-        return True
+    if include_remote:
+        # Check for remote indicators, but exclude specific non-MA cities
+        # Exclude other US states/cities first
+        non_ma_cities = [
+            'denver', 'colorado', ', co,', ', co ', 
+            'tempe', 'arizona', ', az,', ', az ',
+            'new york', ', ny,', ', ny ', 'nyc',
+            'san francisco', 'california', ', ca,', ', ca ',
+            'seattle', 'washington', ', wa,', ', wa ',
+            'austin', 'texas', ', tx,', ', tx ',
+            'chicago', 'illinois', ', il,', ', il ',
+        ]
+        # If it contains a non-MA city/state, reject it
+        if any(city in l for city in non_ma_cities):
+            return False
+        # Now check for remote keywords
+        if any(rem in l for rem in ("remote", "anywhere", "distributed", "remote in usa", "remote in us", "united states remote")):
+            return True
     return False
 
 def title_matches_keywords(title: str, include_keywords: List[str], exclude_keywords: List[str]) -> bool:

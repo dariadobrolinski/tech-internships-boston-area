@@ -611,22 +611,23 @@ def format_location(location: str) -> str:
     location = location.replace('Remote in India', '___remote_india___')
     location = location.replace('Remote in Europe', '___remote_europe___')
     
-    # Add commas between locations that are missing them
-    # Pattern: matches state abbreviation followed by capital letter (new location)
-    # Handle patterns like "MA" + "New York" or "MA" + "NYC" 
-    location = re.sub(r'([A-Z]{2})([A-Z]{2,}[a-z])', r'\1, \2', location)  # MA + NewYork
-    location = re.sub(r'([A-Z]{2})([A-Z]{3,})', r'\1, \2', location)  # MA + NYC
-    location = re.sub(r'([A-Z]{2})([A-Z][a-z])', r'\1, \2', location)  # MA + Washington
+    # Add commas/separators between locations that are missing them
+    # Handle edge cases like "CT Norwood, MA" (two separate locations concatenated)
     
-    # Add commas between city, state and another city (lowercase to uppercase transition)
-    location = re.sub(r'([a-z])([A-Z][a-z])', r'\1, \2', location)
+    # Pattern 1: "STATE City, STATE" -> "STATE; City, STATE"
+    # e.g., "CT Norwood, MA" -> "CT; Norwood, MA"
+    location = re.sub(r'\b([A-Z]{2})\s+([A-Z][a-z]+),\s*([A-Z]{2})\b', r'\1; \2, \3', location)
     
-    # Add commas between "Remote in X" patterns
-    location = re.sub(r'(Remote in [A-Z]{2,})([A-Z])', r'\1, \2', location)
-    location = re.sub(r'(Remote in [A-Za-z\s]+?)([A-Z][a-z]+, [A-Z]{2})', r'\1, \2', location)
+    # Pattern 2: "City, STATE City, STATE" -> "City, STATE; City, STATE"
+    # e.g., "Boston, MA Cambridge, MA" -> "Boston, MA; Cambridge, MA"
+    location = re.sub(r'([a-z], [A-Z]{2})\s+([A-Z][a-z]+)', r'\1; \2', location)
     
     # Handle "X locations" pattern at the start
     location = re.sub(r'(\d+ locations)([A-Z])', r'\1, \2', location)
+    
+    # Add commas between "Remote in X" patterns and other locations
+    location = re.sub(r'(Remote in [A-Z]{2,})([A-Z])', r'\1; \2', location)
+    location = re.sub(r'(Remote in [A-Za-z\s]+?)([A-Z][a-z]+, [A-Z]{2})', r'\1; \2', location)
     
     # Restore protected patterns
     location = location.replace('___remote_usa___', 'Remote in USA')
@@ -635,9 +636,24 @@ def format_location(location: str) -> str:
     location = location.replace('___remote_india___', 'Remote in India')
     location = location.replace('___remote_europe___', 'Remote in Europe')
     
-    # Split by common delimiters (semicolon or comma)
-    locations = re.split(r'[;]|,(?!\s*[A-Z]{2}\s*$)', location)  # Split by semicolon or comma, but not before a state code
-    locations = [loc.strip() for loc in locations if loc.strip()]
+    # Split by semicolons primarily (indicates separate locations)
+    # Also split by commas but be careful not to split city, state pairs
+    locations = re.split(r';', location)  # Split by semicolon first
+    
+    # Now handle comma-separated locations within each segment
+    expanded_locations = []
+    for segment in locations:
+        # Only split by comma if it's not part of a "City, ST" pattern
+        # Look for pattern: word, 2-letter-code and keep it together
+        if re.search(r'[a-zA-Z]+,\s*[A-Z]{2}(?:\s|$)', segment):
+            # Has city, state pattern - keep as is
+            expanded_locations.append(segment.strip())
+        else:
+            # No state pattern, can split by commas
+            parts = [p.strip() for p in segment.split(',')]
+            expanded_locations.extend([p for p in parts if p])
+    
+    locations = [loc.strip() for loc in expanded_locations if loc.strip()]
     
     # Merge city with state if they got split (e.g., "Boston" and "MA" -> "Boston, MA")
     merged_locations = []
@@ -676,28 +692,20 @@ def format_location(location: str) -> str:
             unique_locations.append(loc)
     locations = unique_locations
     
-    # If too many locations or too long, truncate and add line break
-    if len(locations) > 3 or len(', '.join(locations)) > 50:
-        # Take first 2-3 locations that fit reasonably
-        kept_locations = []
-        total_length = 0
-        
-        for loc in locations[:3]:  # Max 3 locations shown
-            if total_length + len(loc) > 50 and kept_locations:
-                break
-            kept_locations.append(loc)
-            total_length += len(loc) + 2  # +2 for ", "
-        
-        result = ', '.join(kept_locations)
-        
-        # If we truncated, show count
-        if len(locations) > len(kept_locations):
-            remaining = len(locations) - len(kept_locations)
-            result += f'<br>+{remaining} more'
-        
+    # Format locations - show all relevant ones
+    # If there are many, just show them all in a compact format
+    if len(locations) > 4:
+        # Show first location prominently, then list count of others
+        # E.g., "Boston, MA (+3 other locations)"
+        result = f"{locations[0]} (+{len(locations)-1} other location{'s' if len(locations) > 2 else ''})"
         return result
-    
-    return ', '.join(locations)
+    elif len(locations) > 1:
+        # For 2-4 locations, show them all but compactly
+        # Use semicolons to save space
+        return '; '.join(locations)
+    else:
+        # Single location - just return it
+        return locations[0] if locations else ""
 
 
 def parse_date(date_cell: str) -> str:
