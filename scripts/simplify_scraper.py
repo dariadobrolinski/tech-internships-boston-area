@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """
-SimplifyJobs Summer2026-Internships Scraper
-Fetches tech internship listings from the SimplifyJobs GitHub repo and filters
+GitHub Internship Scraper
+Fetches tech internship listings from multiple GitHub repos and filters
 for Boston area and remote positions.
+
+Sources:
+- SimplifyJobs/Summer2026-Internships
+- speedyapply/2026-SWE-College-Jobs
+- vanshb03/Summer2026-Internships
 
 Usage:
     python simplify_scraper.py --out ./reports
@@ -14,7 +19,7 @@ import logging
 import os
 import re
 import sys
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
 
 import requests
@@ -27,7 +32,27 @@ logging.basicConfig(
 )
 
 # ---------- Constants ----------
-SIMPLIFY_README_URL = "https://raw.githubusercontent.com/SimplifyJobs/Summer2026-Internships/dev/README.md"
+# GitHub repo sources (URL, branch, owner credit)
+GITHUB_SOURCES = [
+    {
+        "name": "SimplifyJobs",
+        "url": "https://raw.githubusercontent.com/SimplifyJobs/Summer2026-Internships/dev/README.md",
+        "owner": "SimplifyJobs",
+        "repo": "Summer2026-Internships"
+    },
+    {
+        "name": "SpeedyApply",
+        "url": "https://raw.githubusercontent.com/speedyapply/2026-SWE-College-Jobs/main/README.md",
+        "owner": "speedyapply",
+        "repo": "2026-SWE-College-Jobs"
+    },
+    {
+        "name": "vanshb03",
+        "url": "https://raw.githubusercontent.com/vanshb03/Summer2026-Internships/main/README.md",
+        "owner": "vanshb03",
+        "repo": "Summer2026-Internships"
+    }
+]
 
 # Boston area cities that are unambiguous (only in MA)
 BOSTON_LOCATIONS_UNAMBIGUOUS = [
@@ -54,6 +79,7 @@ class JobListing:
     location: str
     apply_url: str
     date_posted: str
+    source: str = ""  # Which GitHub repo this came from
     is_closed: bool = False
     
     def matches_location(self, include_remote: bool = True) -> bool:
@@ -105,36 +131,44 @@ class JobListing:
         return False
 
 
-def fetch_simplify_readme() -> str:
-    """Fetch the README.md content from SimplifyJobs repo."""
+def fetch_readme(url: str, source_name: str) -> str:
+    """Fetch README.md content from a GitHub repo."""
     try:
-        response = requests.get(SIMPLIFY_README_URL, timeout=30)
+        response = requests.get(url, timeout=30)
         response.raise_for_status()
-        logging.info(f"Successfully fetched SimplifyJobs README ({len(response.text)} bytes)")
+        logging.info(f"Successfully fetched {source_name} README ({len(response.text)} bytes)")
         return response.text
     except requests.RequestException as e:
-        logging.error(f"Failed to fetch SimplifyJobs README: {e}")
-        raise
+        logging.error(f"Failed to fetch {source_name} README: {e}")
+        return ""
 
 
-def parse_markdown_table(readme_content: str) -> List[JobListing]:
+def parse_markdown_table(readme_content: str, source_name: str = "") -> List[JobListing]:
     """
-    Parse the HTML tables from SimplifyJobs README.
+    Parse tables from GitHub README files (both HTML and markdown formats).
     
-    The README uses markdown headers but HTML tables.
-    Extracts jobs from all tech internship sections:
-    - Software Engineering
-    - Product Management
-    - Data Science, AI & Machine Learning
-    - Quantitative Finance
-    - Hardware Engineering
+    Extracts jobs from internship listings, filtering for tech roles.
+    Excludes Product Management positions.
     """
+    jobs = []
+    
+    # Try HTML table format first (SimplifyJobs style)
+    html_jobs = parse_html_tables(readme_content, source_name)
+    if html_jobs:
+        return html_jobs
+    
+    # Fall back to markdown table format (speedyapply, vanshb03 style)
+    md_jobs = parse_plain_markdown_tables(readme_content, source_name)
+    return md_jobs
+
+
+def parse_html_tables(readme_content: str, source_name: str = "") -> List[JobListing]:
+    """Parse HTML tables (SimplifyJobs format)."""
     jobs = []
     
     # Define all sections we want to scrape
     sections_to_scrape = [
         '💻 Software Engineering Internship Roles',
-        '📱 Product Management Internship Roles',
         '🤖 Data Science, AI & Machine Learning Internship Roles',
         '📈 Quantitative Finance Internship Roles',
         '🔧 Hardware Engineering Internship Roles'
@@ -193,7 +227,7 @@ def parse_markdown_table(readme_content: str) -> List[JobListing]:
                 continue
             
             try:
-                job = parse_html_row(cells)
+                job = parse_html_row(cells, source_name)
                 if job:
                     jobs.append(job)
                     section_jobs += 1
@@ -203,11 +237,109 @@ def parse_markdown_table(readme_content: str) -> List[JobListing]:
         
         logging.info(f"  → Parsed {section_jobs} jobs from {section_name}")
     
-    logging.info(f"Parsed {len(jobs)} total job listings from SimplifyJobs (all sections)")
+    logging.info(f"Parsed {len(jobs)} total job listings from {source_name} (all sections)")
     return jobs
 
 
-def parse_html_row(cells) -> Optional[JobListing]:
+def parse_plain_markdown_tables(readme_content: str, source_name: str = "") -> List[JobListing]:
+    """Parse plain markdown tables (speedyapply, vanshb03 format)."""
+    jobs = []
+    lines = readme_content.split('\n')
+    
+    in_table = False
+    table_started = False
+    
+    for i, line in enumerate(lines):
+        # Look for table separator (|---|---|)
+        if '|' in line and ('---' in line or '===' in line):
+            in_table = True
+            table_started = True
+            continue
+        
+        # If we were in a table and hit an empty line or non-table line, stop
+        if table_started and (not line.strip() or (line.strip() and '|' not in line)):
+            in_table = False
+            continue
+        
+        # Parse table rows
+        if in_table and '|' in line and line.strip().startswith('|'):
+            try:
+                job = parse_markdown_row(line, source_name)
+                if job:
+                    jobs.append(job)
+            except Exception as e:
+                logging.debug(f"Error parsing markdown row: {e}")
+                continue
+    
+    logging.info(f"Parsed {len(jobs)} total job listings from {source_name}")
+    return jobs
+
+
+def parse_markdown_row(row: str, source_name: str = "") -> Optional[JobListing]:
+    """Parse a markdown table row."""
+    # Split by | and clean up
+    cells = [cell.strip() for cell in row.split('|')]
+    cells = [c for c in cells if c]  # Remove empty cells
+    
+    if len(cells) < 3:
+        return None
+    
+    # Extract data (format: Company | Position | Location | ... )
+    company_cell = cells[0]
+    position_cell = cells[1]
+    location_cell = cells[2]
+    
+    # Get URL from any cell (usually in position or company)
+    apply_url = extract_url(company_cell) or extract_url(position_cell)
+    if len(cells) > 3:
+        apply_url = apply_url or extract_url(cells[3])
+    
+    # Get date if available (usually last column or in "Age" column)
+    date_cell = cells[-1] if len(cells) > 4 else ""
+    
+    # Check for closed/filled indicators
+    if '🔒' in row or 'closed' in row.lower() or 'filled' in row.lower():
+        return None
+    
+    # Clean company name
+    company_name = extract_company_name(company_cell)
+    if not company_name:
+        return None
+    
+    # Clean title
+    title = clean_markdown(position_cell)
+    if not title:
+        return None
+    
+    # Filter out Product Manager positions
+    title_lower = title.lower()
+    if 'product manager' in title_lower or 'product management' in title_lower:
+        if 'software' not in title_lower and 'engineer' not in title_lower:
+            return None
+    
+    # Clean and format location
+    location = clean_markdown(location_cell)
+    location = format_location(location)
+    
+    # Filter out jobs with no relevant locations
+    if not location:
+        return None
+    
+    # Parse date
+    date_posted = parse_date(date_cell)
+    
+    return JobListing(
+        company=company_name,
+        title=title,
+        location=location,
+        apply_url=apply_url or "",
+        date_posted=date_posted,
+        source=source_name,
+        is_closed=False
+    )
+
+
+def parse_html_row(cells, source_name: str = "") -> Optional[JobListing]:
     """Parse HTML table cells into a JobListing."""
     if len(cells) < 4:
         return None
@@ -252,6 +384,7 @@ def parse_html_row(cells) -> Optional[JobListing]:
         location=location,
         apply_url=apply_url,
         date_posted=date_posted,
+        source=source_name,
         is_closed=is_closed
     )
 
@@ -706,6 +839,32 @@ def deduplicate_jobs(jobs: List[JobListing], existing: set) -> List[JobListing]:
     return new_jobs
 
 
+def deduplicate_across_sources(jobs: List[JobListing]) -> List[JobListing]:
+    """
+    Remove duplicate jobs across multiple sources.
+    Keeps the first occurrence (prioritizes earlier sources).
+    """
+    seen = set()
+    unique_jobs = []
+    duplicates_removed = 0
+    
+    for job in jobs:
+        # Create identifier from company + title (case-insensitive)
+        identifier = f"{job.company}|{job.title}".lower()
+        
+        if identifier not in seen:
+            seen.add(identifier)
+            unique_jobs.append(job)
+        else:
+            duplicates_removed += 1
+            logging.debug(f"Skipping duplicate: {job.company} - {job.title} (from {job.source})")
+    
+    if duplicates_removed > 0:
+        logging.info(f"Removed {duplicates_removed} duplicates across sources")
+    
+    return unique_jobs
+
+
 def append_to_readme(jobs: List[JobListing]) -> None:
     """Append new jobs to README.md."""
     if not jobs:
@@ -748,14 +907,27 @@ def append_to_readme(jobs: List[JobListing]) -> None:
         
         logging.info(f"✅ Added {len(jobs)} new jobs to README.md")
         
-        # Print summary
+        # Print summary grouped by source
         print(f"\n{'='*60}")
-        print(f"Added {len(jobs)} new jobs from SimplifyJobs:")
+        print(f"✅ Added {len(jobs)} new jobs to README.md")
         print(f"{'='*60}")
+        
+        # Group by source
+        by_source = {}
         for job in jobs:
-            print(f"  • {job.company} - {job.title}")
-            print(f"    📍 {job.location}")
-        print(f"{'='*60}\n")
+            if job.source not in by_source:
+                by_source[job.source] = []
+            by_source[job.source].append(job)
+        
+        for source_name, source_jobs in by_source.items():
+            print(f"\n📦 From {source_name} ({len(source_jobs)} jobs):")
+            for job in source_jobs[:5]:  # Show first 5 from each source
+                print(f"  • {job.company} - {job.title}")
+                print(f"    📍 {job.location}")
+            if len(source_jobs) > 5:
+                print(f"  ... and {len(source_jobs) - 5} more")
+        
+        print(f"\n{'='*60}\n")
         
     except Exception as e:
         logging.error(f"Failed to append to README: {e}")
@@ -764,7 +936,7 @@ def append_to_readme(jobs: List[JobListing]) -> None:
 
 def main():
     ap = argparse.ArgumentParser(
-        description="Scrape SimplifyJobs Summer2026-Internships for Boston area jobs"
+        description="Scrape multiple GitHub repos for Summer 2026 internships in Boston area"
     )
     ap.add_argument("--no-remote", action="store_true", 
                     help="Exclude remote positions")
@@ -772,35 +944,67 @@ def main():
                     help="Show what would be added without modifying README")
     args = ap.parse_args()
     
-    print("🔍 Fetching jobs from SimplifyJobs/Summer2026-Internships...")
+    print("🔍 Fetching jobs from multiple GitHub repositories...")
+    print(f"   Sources: {', '.join([s['owner'] + '/' + s['repo'] for s in GITHUB_SOURCES])}")
+    print()
     
-    # Fetch and parse
-    readme_content = fetch_simplify_readme()
-    all_jobs = parse_markdown_table(readme_content)
+    all_jobs = []
+    
+    # Fetch and parse from all sources
+    for source in GITHUB_SOURCES:
+        print(f"📥 Fetching from {source['owner']}/{source['repo']}...")
+        readme_content = fetch_readme(source['url'], source['name'])
+        
+        if readme_content:
+            jobs = parse_markdown_table(readme_content, source['name'])
+            all_jobs.extend(jobs)
+            print(f"   ✓ Found {len(jobs)} jobs from {source['name']}")
+        else:
+            print(f"   ⚠️  Could not fetch from {source['name']}")
+        print()
+    
+    if not all_jobs:
+        print("❌ No jobs found from any source")
+        return
+    
+    print(f"📊 Total jobs fetched: {len(all_jobs)}")
+    
+    # Deduplicate across sources first (before filtering)
+    all_jobs = deduplicate_across_sources(all_jobs)
+    print(f"📊 After cross-source deduplication: {len(all_jobs)} unique jobs")
     
     # Filter for Boston/Remote
     include_remote = not args.no_remote
     filtered_jobs = filter_boston_remote(all_jobs, include_remote)
     
     if not filtered_jobs:
-        print("No Boston/Remote jobs found in SimplifyJobs repo")
+        print("No Boston/Remote jobs found")
         return
     
-    # Deduplicate
+    # Deduplicate against existing README jobs
     existing_jobs = get_existing_jobs()
     new_jobs = deduplicate_jobs(filtered_jobs, existing_jobs)
     
     if not new_jobs:
-        print("✨ No new jobs to add - all SimplifyJobs listings are already in your README!")
+        print("✨ No new jobs to add - all listings are already in your README!")
         return
     
     # Sort by date (newest first)
     new_jobs.sort(key=lambda j: parse_date_to_datetime(j.date_posted), reverse=True)
     
-    # Show preview
+    # Show preview grouped by source
     print(f"\n📋 Found {len(new_jobs)} new jobs:")
-    for job in new_jobs[:10]:  # Show first 10
-        print(f"  • {job.company} - {job.title} ({job.location})")
+    source_counts = {}
+    for job in new_jobs:
+        source_counts[job.source] = source_counts.get(job.source, 0) + 1
+    
+    for source_name, count in source_counts.items():
+        print(f"   • {source_name}: {count} jobs")
+    
+    print("\nPreview (first 10):")
+    for job in new_jobs[:10]:
+        print(f"  • {job.company} - {job.title}")
+        print(f"    📍 {job.location} | 📅 {job.date_posted} | 🔗 {job.source}")
     if len(new_jobs) > 10:
         print(f"  ... and {len(new_jobs) - 10} more")
     
@@ -810,6 +1014,13 @@ def main():
     
     # Append to README
     append_to_readme(new_jobs)
+    
+    # Print credits
+    print("\n" + "="*60)
+    print("📚 Data sources - Thank you to:")
+    for source in GITHUB_SOURCES:
+        print(f"   • {source['owner']}/{source['repo']}")
+    print("="*60)
 
 
 if __name__ == "__main__":
