@@ -365,6 +365,7 @@ I know this isn't perfect so if there are any issues feel free to contribute!
 | HPR | Software Engineering Intern | Needham, MA | 08/02/2025 | [APPLY](https://job-boards.greenhouse.io/hyannisportresearch/jobs/6667961003?gh_src=9yscuffh3us&utm_source=github-vansh-ouckah) |
 | Hypergiant Sensory Sciences | SkillBridge Internship - Frontend Engineer | Remote | 07/22/2025 | [APPLY](https://www.hypergiant.com) |
 | Blackrock | 2026 Summer Intern | GA Boston | 03/04/2025 | [APPLY](https://blackrock.tal.net/vx/lang-en-GB/mobile-0/brand-3/xf-e774a855fe31/candidate/so/pm/1/pl/1/opp/9601-2026-Summer-Internship-Program-AMERS/en-GB?utm_source=github-vansh-ouckah) |
+| Datadog | Enterprise Security Sales Specialist | Florida, USA, Remote<br>+1 more | 10/01/2025 | [APPLY](https://careers.datadoghq.com/detail/7132132/?gh_jid=7132132) |
 
 ---
 
