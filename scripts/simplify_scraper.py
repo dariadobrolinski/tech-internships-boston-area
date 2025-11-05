@@ -611,6 +611,12 @@ def format_location(location: str) -> str:
     location = location.replace('Remote in India', '___remote_india___')
     location = location.replace('Remote in Europe', '___remote_europe___')
     
+    # Handle concatenated state/location names without spaces
+    # e.g., "NHMississippiTennessee" -> "NH; Mississippi; Tennessee"
+    # Split on patterns where a lowercase letter is followed by an uppercase letter or full state name
+    location = re.sub(r'([a-z])([A-Z][a-z]{3,})', r'\1; \2', location)  # lowercase followed by capitalized word
+    location = re.sub(r'([A-Z]{2})([A-Z][a-z]{3,})', r'\1; \2', location)  # 2-letter state code followed by full name
+    
     # Add commas/separators between locations that are missing them
     # Handle edge cases like "CT Norwood, MA" (two separate locations concatenated)
     
